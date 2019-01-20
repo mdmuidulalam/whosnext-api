@@ -7,8 +7,11 @@ class usersdata extends baseData {
         this.users = new userModel(dbConnection).WhosNextUsers;
     }
 
+    /* Inset Data in Users Table */
+
+    /// Insert User
     insertUser(user) {
-        var users = this.users;
+        let users = this.users;
         return new Promise(function(resolve, reject) {
             users.create({
                 Name: user.name,
@@ -22,6 +25,27 @@ class usersdata extends baseData {
             });
         });
     }
+
+    /* End Inset Data in Users Table */
+
+    /* Get Data From User Table */
+
+    /// Get user by email
+    getUserByEmail(email) {
+        let users = this.users;
+        return new Promise(function(resolve, reject) {
+            users.findAll({
+                limit: 1,
+                where: {
+                    Email: email
+                }
+            }).then(function(dbUser){
+                resolve(dbUser);
+            });
+        });
+    }
+
+    /* End Get Data From User Table */
 }
 
 module.exports = usersdata;
