@@ -12,26 +12,26 @@ router.post('/signup', function(req, res) {
   let signUpViewModel = req.body;
 
   if(signUpViewModel.Name === null
-    ||signUpViewModel.Name.trim().length === 0
+    || signUpViewModel.Name.trim().length === 0
     || signUpViewModel.Email === null
     || signUpViewModel.Password === null
     || signUpViewModel.Gender === 0
-    || !isValidDate(signUpViewModel.BirthDate + '-' + signUpViewModel.BirthMonth + '-' + signUpViewModel.BirthYear))
-  {
+    || !isValidDate(signUpViewModel.BirthDate + '-' + signUpViewModel.BirthMonth + '-' + signUpViewModel.BirthYear)) {
     response.success = false;
   }
 
-  if(response.success)
-  {
+  if(response.success) {
     let baseObj = new base();
     dbConnection = baseObj.dbConnection;
         
     let am = new accountsManager(dbConnection);
 
-    am.signup(signUpViewModel, response, function() {
+    am.signup(signUpViewModel, response, function(response) {
       res.send(response);
       dbConnection.close();
     });
+  } else {
+    res.send(response);
   }
 });
 

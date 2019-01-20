@@ -1,25 +1,39 @@
-var baseManager = require('./baseManager');
-var usersData = require('../dal/usersData');
+const baseManager = require('./baseManager');
+const usersData = require('../dal/usersData');
+const bcrypt = require('bcrypt');
+const config = require('../config');
 
 class accountsManager extends baseManager {
     constructor(dbConnection) {
         super(dbConnection);
+        this.uData = new usersData(this.dbConnection); 
     }
 
     signup(signUpViewModel, response, callback) {
-        let uData = new usersData(this.dbConnection);
-        
-        var user = {
-            name : signUpViewModel.Name,
-            email : signUpViewModel.Email,
-            birthDate : new Date(signUpViewModel.BirthDate, signUpViewModel.BirthMonth, signUpViewModel.BirthDate),
-            gender: signUpViewModel.Gender,
-            passwordHash: 'hash',
-            userId: 'first'
-        };
+        let uData = this.uData;
 
-        uData.insertUser(user).then(function(result) {
-            callback();            
+        uData.getUserByEmail(signUpViewModel.Email).then(function(dbUser) {
+            if(dbUser.length == 0)
+            {
+                var user = {
+                    name : signUpViewModel.Name,
+                    email : signUpViewModel.Email,
+                    birthDate : new Date(signUpViewModel.BirthYear + '-' + signUpViewModel.BirthMonth + '-' + signUpViewModel.BirthDate + ' 00:00:00 GMT'),
+                    gender: signUpViewModel.Gender,
+                    passwordHash: bcrypt.hashSync(signUpViewModel.Password, config.password.salt),
+                    userId: signUpViewModel.Email.replace("@", ".").toLowerCase()
+                };
+                
+                uData.insertUser(user).then(function(result) {
+                    callback(response);            
+                });
+            }
+            else 
+            {
+                response.success = false;
+                response.errorDescriptions.push('DuplicateEmail');
+                callback(response);
+            }            
         });
     }
 }   
