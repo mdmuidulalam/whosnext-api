@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 
 class user {
-    constructor(dbConnection){
+    constructor(dbConnection) {
         this.WhosNextUsers = dbConnection.define('WhosNextUsers', {
             Id: { type: Sequelize.INTEGER },
             Name: { type: Sequelize.STRING },

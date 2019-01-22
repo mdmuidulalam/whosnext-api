@@ -13,4 +13,9 @@ config.database.dialect = 'mysql';
 config.password = {};
 config.password.salt = 12;
 
+/// JWT JWT_SECRET 
+config.jwt = {}
+config.jwt.secret = 'axq6f51'
+config.jwt.maxAge = 3600
+
 module.exports = config;
