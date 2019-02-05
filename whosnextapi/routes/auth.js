@@ -6,6 +6,7 @@ var base = require('./base');
 var authManager = require('../manager/authManager')
 
 /* login api */
+/* For user authentication when they try to log in */
 router.post('/login', function(req, res) {
     let response = new responseViewModel();
     let logInViewModel = req.body;
@@ -22,9 +23,7 @@ router.post('/login', function(req, res) {
 
         let am = new authManager(dbConnection);
         
-        console.log(am.login);
-
-        am.login(logInViewModel, response, function(response) {
+        am.login(logInViewModel, response).finally(() => {
             res.send(response);
             dbConnection.close();
         });

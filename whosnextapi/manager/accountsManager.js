@@ -9,10 +9,10 @@ class accountsManager extends baseManager {
         this.uData = new usersData(this.dbConnection); 
     }
 
-    signup(signUpViewModel, response, callback) {
+    signup(signUpViewModel, response) {
         let uData = this.uData;
 
-        uData.getUserByEmail(signUpViewModel.Email).then(function(dbUser) {
+        return uData.getUserByEmail(signUpViewModel.Email).then((dbUser) => {
             if(dbUser.length == 0)
             {
                 var user = {
@@ -23,17 +23,33 @@ class accountsManager extends baseManager {
                     passwordHash: bcrypt.hashSync(signUpViewModel.Password, config.password.salt),
                     userId: signUpViewModel.Email.replace("@", ".").toLowerCase()
                 };
-                
-                uData.insertUser(user).then(function(result) {
-                    callback(response);            
-                });
+
+                return user;
             }
             else 
             {
-                response.success = false;
-                response.errorDescriptions.push('DuplicateEmail');
-                callback(response);
-            }            
+                throw 'DuplicateEmail';
+            }
+        }).then((user) => {
+            return uData.insertUser(user).then(() => {
+                response.success = true;
+            });
+        }).catch((error) => {
+            response.success = false;
+            response.errorDescriptions.push(error);
+        });
+    }
+
+    getAllFrinedsBySearchText(searchText, response) {
+        let uData = this.uData;
+
+        return uData.getUserBySearchName(searchText.toLowerCase()).then((dbUsers) => {
+            response.success = true;
+            response.entity = {};
+            response.entity = dbUsers;
+        }).catch((error) => {
+            response.success = false;
+            response.errorDescriptions.push(error);
         });
     }
 }   
