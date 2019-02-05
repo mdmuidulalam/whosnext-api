@@ -6,18 +6,22 @@ class jwtMW {
 
     verifyJWT_MW(req, res, next)
     {
-        let token = req.headers['x-access-token'] || req.headers['authorization'];
+        let token = req.headers['authorization'];
+
+        if(token === undefined || token === '') {
+            res.status(400).json({message: "Authentication failed!"});
+            return;
+        }
         if (token.startsWith('Bearer ')) {
             token = token.slice(7, token.length);
         }
 
-        console.log(token);
 
         new jwtConfig().verifyJWTToken(token).then((decodedToken) => {
-            req.user = decodedToken.data
-            next()
+            req.user = decodedToken.data;
+            next();
         }).catch((err) => {
-            res.status(400).json({message: "Invalid auth token provided."})
+            res.status(400).json({message: "Authentication failed!"});
         });
     }
 }

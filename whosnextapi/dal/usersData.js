@@ -12,18 +12,14 @@ class usersdata extends baseData {
     /// Insert User
     insertUser(user) {
         let users = this.users;
-        return new Promise(function(resolve, reject) {
-            users.create({
+        return users.create({
                 Name: user.name,
                 Email: user.email,
                 PasswordHash: user.passwordHash,
                 BirthDate: user.birthDate,
                 Gender: user.gender,
                 UserId: user.userId
-            }).then(function(){
-                resolve();
             });
-        });
     }
 
     /* End Inset Data in Users Table */
@@ -32,15 +28,24 @@ class usersdata extends baseData {
 
     /// Get user by email
     getUserByEmail(email) {
-        let users = this.users;
-        return new Promise(function(resolve, reject) {
-            users.findAll({
+        return this.users.findAll({
                 limit: 1,
                 where: {
-                    Email: email
+                    Email: {
+                        $eq: email
+                    }
                 }
-            }).then(function(dbUser){
-                resolve(dbUser);
+            });
+    }
+
+    /// Get friends search by name
+    getUserBySearchName(searchText) {
+        let users = this.users;
+        return new Promise((resolve, reject) => {
+            users.findAll({
+                where: {
+                    Name: { $like: '%' + searchText + '%' }
+                }
             });
         });
     }

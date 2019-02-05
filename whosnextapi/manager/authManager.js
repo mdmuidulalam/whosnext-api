@@ -10,23 +10,23 @@ class authManager extends baseManager {
         this.uData = new usersData(this.dbConnection); 
     }
 
-    login(logInViewModel, response, callback) {
+    /* login api manager */
+    login(logInViewModel, response) {
         let uData = this.uData;
-
-        console.log(logInViewModel);
         
-        uData.getUserByEmail(logInViewModel.Email.trim()).then(function(dbUser) {
+        return uData.getUserByEmail(logInViewModel.Email.trim()).then((dbUser) => {
             if(dbUser.length != 0 && bcrypt.compareSync(logInViewModel.Password, dbUser[0].PasswordHash)) {
                 let auth = new jwt();
                 response.success = true;
                 response.entity = {};
                 response.entity.token = auth.createJWToken(dbUser);
-                console.log(response);
-                callback(response);
+                console.log(response.entity.token);
             } else {
-                response.success = false;
-                callback(response);
+                throw 'Wrong email or password';
             }
+        }).catch((error) => {
+            response.success = false;
+            response.errorDescriptions.push(error);
         });
     }
 }

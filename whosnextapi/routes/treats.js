@@ -13,4 +13,8 @@ router.get('/gettreats', function(req, res) {
     res.send('treats authenticated!!');
 });
 
+router.post('/addtreat', function(req, res) {
+    res.send('treats authenticated!!');
+});
+
 module.exports = router;
