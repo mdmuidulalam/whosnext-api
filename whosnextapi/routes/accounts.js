@@ -4,7 +4,7 @@ var isValidDate = require('is-valid-date');
 
 var responseViewModel = require('../utilities/responseViewModel');
 var base = require('./base');
-var accountsManager = require('../manager/accountsManager')
+var accountsManager = require('../manager/accountsManager');
 
 /* signup api */
 router.post('/signup', function(req, res) {

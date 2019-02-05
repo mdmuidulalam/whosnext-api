@@ -17,10 +17,6 @@ class jwtConfig {
     }
 
     createJWToken(details) {
-        if (typeof details !== 'object') {
-            details = {};
-        }
-
         let token = jwt.sign({
                 data: details
             }, config.jwt.secret, {

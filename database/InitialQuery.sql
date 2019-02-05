@@ -32,5 +32,7 @@ CREATE TABLE IF NOT EXISTS Treats
 	CreateDate datetime NOT NULL,
 	ConfirmationDate datetime,
 	CompleteDate datetime,
+    createdAt datetime NOT NULL,
+    updatedAt datetime NOT NULL,
     PRIMARY KEY (ID)
 );

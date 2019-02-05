@@ -1,5 +1,3 @@
-const Promise = require("bluebird");
-
 var baseData = require('./baseData');
 var userModel = require('../models/user');
 

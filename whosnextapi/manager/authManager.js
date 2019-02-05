@@ -19,7 +19,11 @@ class authManager extends baseManager {
                 let auth = new jwt();
                 response.success = true;
                 response.entity = {};
-                response.entity.token = auth.createJWToken(dbUser);
+                response.entity.token = auth.createJWToken({
+                    Id: dbUser[0].Id,
+                    Email: dbUser[0].Email,
+                    UserId: dbUser[0].UserId
+                });
                 console.log(response.entity.token);
             } else {
                 throw 'Wrong email or password';
