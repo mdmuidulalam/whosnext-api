@@ -1,3 +1,5 @@
+const Promise = require("bluebird");
+
 var baseData = require('./baseData');
 var userModel = require('../models/user');
 
@@ -41,12 +43,10 @@ class usersdata extends baseData {
     /// Get friends search by name
     getUserBySearchName(searchText) {
         let users = this.users;
-        return new Promise((resolve, reject) => {
-            users.findAll({
-                where: {
-                    Name: { $like: '%' + searchText + '%' }
-                }
-            });
+        return users.findAll({
+            where: {
+                Name: { $like: '%' + searchText + '%' }
+            }
         });
     }
 

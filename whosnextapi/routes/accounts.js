@@ -11,8 +11,6 @@ router.post('/signup', function(req, res) {
   let response = new responseViewModel();
   let signUpViewModel = req.body;
 
-  console.log(signUpViewModel);
-
   if(signUpViewModel['Name'] === null
     || signUpViewModel['Name'].trim().length === 0
     || signUpViewModel['Email'] === null

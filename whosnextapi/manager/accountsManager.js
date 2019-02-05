@@ -43,7 +43,7 @@ class accountsManager extends baseManager {
     getAllFrinedsBySearchText(searchText, response) {
         let uData = this.uData;
 
-        uData.getUserBySearchName(searchText.toLowerCase()).then((dbUsers) => {
+        return uData.getUserBySearchName(searchText.toLowerCase()).then((dbUsers) => {
             response.success = true;
             response.entity = {};
             response.entity = dbUsers;
