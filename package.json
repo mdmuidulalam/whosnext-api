@@ -2,7 +2,6 @@
   "name": "whosnextapi",
   "version": "0.0.0",
   "private": true,
-  "start": "node ./bin/www",
   "scripts": {
     "start": "node ./bin/www"
   },
