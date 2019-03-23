@@ -1,0 +1,9 @@
+Username: DapPOhT82m
+
+Password: qYD00SyPhF
+
+Database Name: DapPOhT82m
+
+Server: remotemysql.com
+
+Port: 3306
