@@ -1,8 +1,8 @@
-Username: DapPOhT82m
+Username: Oq9badrNFw
 
-Password: qYD00SyPhF
+Password: HV4AfVmLMA
 
-Database Name: DapPOhT82m
+Database Name: Oq9badrNFw
 
 Server: remotemysql.com
 

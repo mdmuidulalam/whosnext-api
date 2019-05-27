@@ -4,9 +4,9 @@ var config = {};
 config.database = {};
 config.database.host = "remotemysql.com";
 config.database.port = 3306;
-config.database.name = "DapPOhT82m";
-config.database.user = "DapPOhT82m";
-config.database.password = "qYD00SyPhF";
+config.database.name = "Oq9badrNFw";
+config.database.user = "Oq9badrNFw";
+config.database.password = "HV4AfVmLMA";
 config.database.dialect = "mysql";
 
 ///Password Salt Code
